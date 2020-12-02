@@ -1,10 +1,6 @@
 import re
 
 
-def password_valid():
-    pass
-
-
 counter = 0
 with open("input.txt") as file:
     for line in file.readlines():
@@ -18,6 +14,5 @@ with open("input.txt") as file:
         
         if list(password).count(letter) >= low and list(password).count(letter) <= high:
             counter += 1
-            print(line)
 
 print(counter)
