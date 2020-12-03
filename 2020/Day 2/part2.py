@@ -4,11 +4,11 @@ import re
 counter = 0
 with open("input.txt") as file:
     for line in file.readlines():
-        m = re.match(r"([0-9]*)-([0-9]*)[ ]*([a-zA-Z]): ([a-zA-Z]*)", line)
-        low = int(m.group(1))
-        high = int(m.group(2))
-        letter = m.group(3)
-        password = m.group(4)
+        m = re.match(r"(?P<low>[0-9]*)-(?P<high>[0-9]*)[\s]*(?P<letter>[a-zA-Z]):[\s]*(?P<password>[a-zA-Z]*)", line)
+        low = int(m.group("low"))
+        high = int(m.group("high"))
+        letter = m.group("letter")
+        password = m.group("password")
         
         letter_count = 0
         if password[low-1] == letter:
