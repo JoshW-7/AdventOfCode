@@ -1,4 +1,3 @@
-import re
 
 
 def passport_valid(d):
@@ -12,7 +11,7 @@ def passport_valid(d):
             "iyr": lambda value: 2010 <= int(value) <= 2020,
             "eyr": lambda value: 2020 <= int(value) <= 2030,
             "hgt": lambda value: 150 <= int(value[:-2]) <= 193 if value.endswith("cm") else (59 <= int(value[:-2]) <= 76 if value.endswith("in") else False),
-            "hcl": lambda value: value.startswith("#") and len(value[1:]) == 6 and bool(re.match(r"#[0-9a-f]{6}", value)),
+            "hcl": lambda value: value.startswith("#") and len(value[1:]) == 6 and int(value[1:], 16),
             "ecl": lambda value: value in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"],
             "pid": lambda value: len(value) == 9 and value.isdigit(),
             "cid": lambda value: True,
