@@ -21,8 +21,6 @@ def get_id(seat_encoding):
 with open("input.txt") as file:
     lines = file.read().split("\n")
 
-n_rows = 128
-n_cols = 8
 seats = []
 for line in lines:
     seat = get_id(line)
