@@ -5,24 +5,16 @@ def get_id(seat_encoding):
     col_data = seat_encoding[7:]
 
     # Get row
-    low,high = (0, n_rows)
-    for c in row_data:
-        width = high - low
-        if c == "F":
-            high = low + width / 2
-        elif c == "B":
-            low = low + width / 2
-    row = int(low)
+    row = 0
+    for i,c in enumerate(reversed(row_data)):
+        if c == "B":
+            row |= 1 << i
 
     # Get col
-    low,high = (0, n_cols)
-    for c in col_data:
-        width = high - low
-        if c == "L":
-            high = low + width / 2
-        elif c == "R":
-            low = low + width / 2
-    col = int(low)
+    col = 0
+    for i,c in enumerate(reversed(col_data)):
+        if c == "R":
+            col |= 1 << i
     
     return row * 8 + col
 
