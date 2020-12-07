@@ -1,4 +1,3 @@
-import re
 
 
 def count_bags(bag):

@@ -1,4 +1,3 @@
-import re
 
 
 def contains_bag(bag_type, bag):
