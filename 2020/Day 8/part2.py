@@ -3,8 +3,9 @@
 class CPU:
     def __init__(self, program=[]):
         self.pc = 0
-        self.acc = 0
+        self.accumulator = 0
         self.program = program
+        self.memory_size = len(self.program)
         self.used_indexes = set()
         self.running = True
         self.valid = False
@@ -13,21 +14,27 @@ class CPU:
         self.used_indexes.add(self.pc)
         op, num = self.program[self.pc]
 
-        if op == "nop":
-            self.pc += 1
-        if op == "acc":
-            self.acc += num
-            self.pc += 1
-        if op == "jmp":
-            self.pc += num
+        if func := getattr(self, op):
+            func(num)
+        else:
+            print(f"Unsupported opcode: {op}")
 
         if self.pc in self.used_indexes:
             self.running = False
             return
-        if self.pc >= len(self.program):
+        if self.pc >= self.memory_size:
             self.valid = True
             self.running = False
-        
+
+    def nop(self, a0):
+        self.pc += 1
+
+    def acc(self, a0):
+        self.accumulator += a0
+        self.pc += 1
+
+    def jmp(self, a0):
+        self.pc += a0
         
 with open("input.txt") as file:
     lines = file.read().split("\n")
@@ -45,7 +52,7 @@ with open("input.txt") as file:
         while cpu.running:
             cpu.decode()
         if cpu.valid:
-            print(cpu.acc)
+            print(cpu.accumulator)
 
     nop_lines = [i for i,line in enumerate(program) if line[0] == "nop"]
     for index in nop_lines:
@@ -55,4 +62,4 @@ with open("input.txt") as file:
         while cpu.running:
             cpu.decode()
         if cpu.valid:
-            print(cpu.acc)
+            print(cpu.accumulator)
