@@ -1,3 +1,4 @@
+from copy import deepcopy
 
 
 class CPU:
@@ -46,7 +47,7 @@ with open("input.txt") as file:
 
     jmp_lines = [i for i,line in enumerate(program) if line[0] == "jmp"]
     for index in jmp_lines:
-        temp_program = [[op,num] for op,num in program]
+        temp_program = deepcopy(program)
         temp_program[index][0] = "nop"
         cpu = CPU(program=temp_program)
         while cpu.running:
@@ -56,7 +57,7 @@ with open("input.txt") as file:
 
     nop_lines = [i for i,line in enumerate(program) if line[0] == "nop"]
     for index in nop_lines:
-        temp_program = [[op,num] for op,num in program]
+        temp_program = deepcopy(program)
         temp_program[index][0] = "jmp"
         cpu = CPU(program=temp_program)
         while cpu.running:
