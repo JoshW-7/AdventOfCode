@@ -11,6 +11,10 @@ class CPU:
         self.running = True
         self.valid = False
 
+    def run(self):
+        while self.running:
+            self.decode()
+
     def decode(self):
         self.used_indexes.add(self.pc)
         op, args = self.program[self.pc]
@@ -22,8 +26,7 @@ class CPU:
 
         if self.pc in self.used_indexes:
             self.running = False
-            return
-        if self.pc >= self.memory_size:
+        elif self.pc >= self.memory_size:
             self.valid = True
             self.running = False
 
@@ -49,8 +52,7 @@ with open("input.txt") as file:
         temp_program = deepcopy(program)
         temp_program[index][0] = "nop"
         cpu = CPU(program=temp_program)
-        while cpu.running:
-            cpu.decode()
+        cpu.run()
         if cpu.valid:
             print(cpu.accumulator)
 
@@ -59,7 +61,6 @@ with open("input.txt") as file:
         temp_program = deepcopy(program)
         temp_program[index][0] = "jmp"
         cpu = CPU(program=temp_program)
-        while cpu.running:
-            cpu.decode()
+        cpu.run()
         if cpu.valid:
             print(cpu.accumulator)
