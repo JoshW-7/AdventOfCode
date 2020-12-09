@@ -13,10 +13,10 @@ class CPU:
 
     def decode(self):
         self.used_indexes.add(self.pc)
-        op, num = self.program[self.pc]
+        op, args = self.program[self.pc]
 
         if func := getattr(self, op):
-            func(num)
+            func(args)
         else:
             print(f"Unsupported opcode: {op}")
 
@@ -27,23 +27,22 @@ class CPU:
             self.valid = True
             self.running = False
 
-    def nop(self, a0):
+    def nop(self, args):
         self.pc += 1
 
-    def acc(self, a0):
-        self.accumulator += a0
+    def acc(self, args):
+        self.accumulator += int(args[0])
         self.pc += 1
 
-    def jmp(self, a0):
-        self.pc += a0
+    def jmp(self, args):
+        self.pc += int(args[0])
         
 with open("input.txt") as file:
     lines = file.read().split("\n")
     program = []
     for line in lines:
-        op, num = line.split(" ")
-        num = int(num)
-        program.append([op, num])
+        op, *args = line.split(" ")
+        program.append([op, args])
 
     jmp_lines = [i for i,line in enumerate(program) if line[0] == "jmp"]
     for index in jmp_lines:
