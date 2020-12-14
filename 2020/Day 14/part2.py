@@ -18,9 +18,6 @@ for line in lines:
                     address |= (0x1 << i)
                 elif c == "X":
                     options.add(i)
-        combos = [c for c in combinations(options, 0)]
-        for i in range(len(options)):
-            combos += [c for c in combinations(options, i+1)]
 
         addresses = set({address})
         if len(options) > 0:
