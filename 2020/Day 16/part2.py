@@ -2,26 +2,19 @@
 
 with open("input.txt") as file:
     lines = file.read().split("\n")
+    fields = {}
+    i = 0
+    while lines[i] != "":
+        name,data = lines[i].split(": ")
+        range_low,range_high = data.split(" or ")
+        fields[name] = {
+            "range_low": [int(range_low.split("-")[0]), int(range_low.split("-")[1])],
+            "range_high": [int(range_high.split("-")[0]), int(range_high.split("-")[1])],
+        }
+        i += 1
 
-fields = {}
-i = 0
-while lines[i] != "":
-    name,data = lines[i].split(": ")
-    range_low,range_high = data.split(" or ")
-    range_low = [int(range_low.split("-")[0]), int(range_low.split("-")[1])]
-    range_high = [int(range_high.split("-")[0]), int(range_high.split("-")[1])]
-    fields[name] = {
-        "range_low": range_low,
-        "range_high": range_high,
-    }
-    i += 1
-
-my_ticket = [int(num) for num in lines[22].split(",")]
-
-ticket_data = lines[25:]
-tickets = []
-for line in ticket_data:
-    tickets.append([int(num) for num in line.split(",")])
+    my_ticket = [int(num) for num in lines[22].split(",")]
+    tickets = [[int(num) for num in line.split(",")] for line in lines[25:]]
 
 invalid_nums = []
 invalid_tickets = []
@@ -58,11 +51,10 @@ for i in range(20):
         valid = True
         for num in numbers:
             if range_low[0] <= num <= range_low[1]:
-                pass
+                continue
             elif range_high[0] <= num <= range_high[1]:
-                pass
-            else:
-                valid = False
+                continue
+            valid = False
         if valid:
             indexes[name].append(i)
 
