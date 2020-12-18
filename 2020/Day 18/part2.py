@@ -15,8 +15,7 @@ def evaluate(statement):
             s = m.group(0)
 
             # Evaluate the addition operation, then substitute the result back into the whole statement
-            result = eval(s)
-            statement = statement[0:statement.find(s)] + str(result) + statement[statement.find(s) + len(s):]
+            statement = statement[0:m.start()] + str(eval(s)) + statement[m.end():]
         else:
             break
 
@@ -28,8 +27,7 @@ def evaluate(statement):
             s = m.group(0)
 
             # Evaluate the multiplication operation, then substitute the result back into the whole statement
-            result = eval(s)
-            statement = statement[0:statement.find(s)] + str(result) + statement[statement.find(s) + len(s):]
+            statement = statement[0:m.start()] + str(eval(s)) + statement[m.end():]
     return statement
 
 results = []
