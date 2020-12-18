@@ -5,7 +5,7 @@ with open("input.txt") as file:
     lines = file.read().split("\n")
 
 def evaluate(statement):
-    
+
     # Evaluate addition operations
     while not statement.isdigit():
 
@@ -14,7 +14,7 @@ def evaluate(statement):
         if m := re.search(r"\d* \+ \d*", statement):
             s = m.group(0)
 
-            # Evaluate the addition operation, then substitue the result back into the whole statement
+            # Evaluate the addition operation, then substitute the result back into the whole statement
             result = eval(s)
             statement = statement[0:statement.find(s)] + str(result) + statement[statement.find(s) + len(s):]
         else:
@@ -27,7 +27,7 @@ def evaluate(statement):
         if m := re.search(r"\d* \* \d*", statement):
             s = m.group(0)
 
-            # Evaluate the multiplication operation, then substitue the result back into the whole statement
+            # Evaluate the multiplication operation, then substitute the result back into the whole statement
             result = eval(s)
             statement = statement[0:statement.find(s)] + str(result) + statement[statement.find(s) + len(s):]
     return statement
